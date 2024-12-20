@@ -3,8 +3,9 @@ import java.util.ArrayList;
 
 public class ENAAManagementApp {
     private ArrayList<Student> students = new ArrayList<>(); // List to store students
+    private int nextStudentId = 1001; // Counter for unique student IDs, starting at 1001
 
-    // Method to display main menu
+    // Main menu display
     public void displayMainMenu() {
         System.out.println("*****************************************");
         System.out.println("*          ENAA Management App          *");
@@ -17,7 +18,7 @@ public class ENAAManagementApp {
         System.out.print("Enter your choice: ");
     }
 
-    // Method to display student management menu
+    // Student management menu display
     public void displayStudentMenu() {
         System.out.println("\n=========== Student Manager ===========");
         System.out.println("* 1. Add New Student                   *");
@@ -30,7 +31,7 @@ public class ENAAManagementApp {
         System.out.print("Enter your choice: ");
     }
 
-    // Method to add a new student
+    // Add a new student
     public void addStudent() {
         Scanner scanner = new Scanner(System.in);
 
@@ -39,11 +40,7 @@ public class ENAAManagementApp {
 
         System.out.println("Enter student's age: ");
         int age = scanner.nextInt();
-        scanner.nextLine(); // Clear the buffer
-
-        System.out.println("Enter student's ID: ");
-        int studentId = scanner.nextInt();
-        scanner.nextLine(); // Clear the buffer
+        scanner.nextLine(); // Clear the line
 
         System.out.println("Enter student's email: ");
         String email = scanner.nextLine();
@@ -51,21 +48,24 @@ public class ENAAManagementApp {
         System.out.println("Enter student's phone number: ");
         String phoneNumber = scanner.nextLine();
 
-        // Create a new Student object and add it to the list
+        // Assign a unique ID to the new student
+        int studentId = nextStudentId;
+        nextStudentId++; // Increment the counter for the next student
+
+        // Create a new student object and add it to the list
         Student student = new Student(name, age, studentId, email, phoneNumber);
         students.add(student);
 
-        System.out.println("Student added successfully!\n");
+        System.out.println("Student added successfully with ID: " + studentId + "\n");
     }
 
-    // Method to view a specific student
+    // View details of a specific student
     public void viewStudent() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter student ID to view details: ");
         int id = scanner.nextInt();
 
-        // Search for the student by ID
         for (Student student : students) {
             if (student.getStudentId() == id) {
                 student.displayStudentDetails();
@@ -76,7 +76,6 @@ public class ENAAManagementApp {
         System.out.println("Student not found.\n");
     }
 
-    // Main method to run the application
     public static void main(String[] args) {
         ENAAManagementApp app = new ENAAManagementApp();
         Scanner scanner = new Scanner(System.in);
@@ -85,7 +84,7 @@ public class ENAAManagementApp {
         do {
             app.displayMainMenu();
             mainChoice = scanner.nextInt();
-            scanner.nextLine(); // Clear the buffer
+            scanner.nextLine(); // Clear the line
 
             switch (mainChoice) {
                 case 1:
@@ -93,11 +92,11 @@ public class ENAAManagementApp {
                     do {
                         app.displayStudentMenu();
                         studentChoice = scanner.nextInt();
-                        scanner.nextLine(); // Clear the buffer
+                        scanner.nextLine(); // Clear the line
 
                         switch (studentChoice) {
                             case 1:
-                                app.addStudent(); // Add a new student
+                                app.addStudent();
                                 break;
                             case 2:
                                 // Logic for assigning student to class
@@ -109,7 +108,7 @@ public class ENAAManagementApp {
                                 // Logic for deleting student
                                 break;
                             case 5:
-                                app.viewStudent(); // View a student
+                                app.viewStudent();
                                 break;
                             case 6:
                                 System.out.println("Returning to Main Menu...\n");
@@ -117,7 +116,7 @@ public class ENAAManagementApp {
                             default:
                                 System.out.println("Invalid choice. Please try again.\n");
                         }
-                    } while (studentChoice != 6); // Loop back to student menu
+                    } while (studentChoice != 6);
                     break;
                 case 2:
                     // Manage Trainers logic
@@ -132,7 +131,7 @@ public class ENAAManagementApp {
                     System.out.println("Invalid choice. Please try again.\n");
             }
 
-        } while (mainChoice != 4); // Exit the loop when the user selects option 4
+        } while (mainChoice != 4);
 
         scanner.close();
     }
