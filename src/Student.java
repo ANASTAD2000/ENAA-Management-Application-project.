@@ -1,55 +1,30 @@
 public class Student {
+    private String name;
+    private int age;
     private int studentId;
-    private String fullName;
     private String email;
     private String phoneNumber;
 
     // Constructor
-    public Student(int studentId, String fullName, String email, String phoneNumber) {
+    public Student(String name, int age, int studentId, String email, String phoneNumber) {
+        this.name = name;
+        this.age = age;
         this.studentId = studentId;
-        this.fullName = fullName;
         this.email = email;
         this.phoneNumber = phoneNumber;
+    }
+
+    // Getter method for studentId
+    public int getStudentId() {
+        return studentId;
     }
 
     // Method to display student details
     public void displayStudentDetails() {
         System.out.println("Student ID: " + studentId);
-        System.out.println("Full Name: " + fullName);
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
         System.out.println("Email: " + email);
         System.out.println("Phone Number: " + phoneNumber);
-    }
-
-    // Getter and Setter methods (optional, for data encapsulation)
-    public int getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 }

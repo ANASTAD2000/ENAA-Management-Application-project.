@@ -2,11 +2,10 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class ENAAManagementApp {
-    // List to store students
-    private ArrayList<Student> students = new ArrayList<>();
+    private ArrayList<Student> students = new ArrayList<>(); // List to store students
 
-    // Method to display the menu
-    public void displayMenu() {
+    // Method to display main menu
+    public void displayMainMenu() {
         System.out.println("*****************************************");
         System.out.println("*          ENAA Management App          *");
         System.out.println("*****************************************");
@@ -18,70 +17,122 @@ public class ENAAManagementApp {
         System.out.print("Enter your choice: ");
     }
 
+    // Method to display student management menu
+    public void displayStudentMenu() {
+        System.out.println("\n=========== Student Manager ===========");
+        System.out.println("* 1. Add New Student                   *");
+        System.out.println("* 2. Assign Student to Class           *");
+        System.out.println("* 3. Edit Student Information          *");
+        System.out.println("* 4. Delete Student                    *");
+        System.out.println("* 5. View a Student                    *");
+        System.out.println("* 6. Back to Main Menu                 *");
+        System.out.println("========================================");
+        System.out.print("Enter your choice: ");
+    }
+
     // Method to add a new student
     public void addStudent() {
         Scanner scanner = new Scanner(System.in);
 
-        // Input student details
-        System.out.print("Enter student's ID: ");
+        System.out.println("Enter student's name: ");
+        String name = scanner.nextLine();
+
+        System.out.println("Enter student's age: ");
+        int age = scanner.nextInt();
+        scanner.nextLine(); // Clear the buffer
+
+        System.out.println("Enter student's ID: ");
         int studentId = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
+        scanner.nextLine(); // Clear the buffer
 
-        System.out.print("Enter student's full name: ");
-        String fullName = scanner.nextLine();
-
-        System.out.print("Enter student's email: ");
+        System.out.println("Enter student's email: ");
         String email = scanner.nextLine();
 
-        System.out.print("Enter student's phone number: ");
+        System.out.println("Enter student's phone number: ");
         String phoneNumber = scanner.nextLine();
 
         // Create a new Student object and add it to the list
-        Student student = new Student(studentId, fullName, email, phoneNumber);
+        Student student = new Student(name, age, studentId, email, phoneNumber);
         students.add(student);
 
         System.out.println("Student added successfully!\n");
     }
 
-    // Method to list all students
-    public void listStudents() {
-        System.out.println("List of all students:");
+    // Method to view a specific student
+    public void viewStudent() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter student ID to view details: ");
+        int id = scanner.nextInt();
+
+        // Search for the student by ID
         for (Student student : students) {
-            student.displayStudentDetails(); // Display each student's details
-            System.out.println("-----------------------------");
+            if (student.getStudentId() == id) {
+                student.displayStudentDetails();
+                return;
+            }
         }
+
+        System.out.println("Student not found.\n");
     }
 
-    // Main method to start the app
+    // Main method to run the application
     public static void main(String[] args) {
         ENAAManagementApp app = new ENAAManagementApp();
         Scanner scanner = new Scanner(System.in);
-        int choice;
+        int mainChoice;
 
         do {
-            // Display the menu
-            app.displayMenu();
-            choice = scanner.nextInt();
-            scanner.nextLine();  // Consume the newline after the integer input
+            app.displayMainMenu();
+            mainChoice = scanner.nextInt();
+            scanner.nextLine(); // Clear the buffer
 
-            switch (choice) {
+            switch (mainChoice) {
                 case 1:
-                    app.addStudent(); // Call method to add a new student
+                    int studentChoice;
+                    do {
+                        app.displayStudentMenu();
+                        studentChoice = scanner.nextInt();
+                        scanner.nextLine(); // Clear the buffer
+
+                        switch (studentChoice) {
+                            case 1:
+                                app.addStudent(); // Add a new student
+                                break;
+                            case 2:
+                                // Logic for assigning student to class
+                                break;
+                            case 3:
+                                // Logic for editing student information
+                                break;
+                            case 4:
+                                // Logic for deleting student
+                                break;
+                            case 5:
+                                app.viewStudent(); // View a student
+                                break;
+                            case 6:
+                                System.out.println("Returning to Main Menu...\n");
+                                break;
+                            default:
+                                System.out.println("Invalid choice. Please try again.\n");
+                        }
+                    } while (studentChoice != 6); // Loop back to student menu
                     break;
                 case 2:
-                    // Logic for managing trainers (to be implemented)
+                    // Manage Trainers logic
                     break;
                 case 3:
-                    // Logic for managing classes (to be implemented)
+                    // Manage Classes logic
                     break;
                 case 4:
                     System.out.println("Exiting program...");
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("Invalid choice. Please try again.\n");
             }
 
-        } while (choice != 4);
+        } while (mainChoice != 4); // Exit the loop when the user selects option 4
 
         scanner.close();
     }
